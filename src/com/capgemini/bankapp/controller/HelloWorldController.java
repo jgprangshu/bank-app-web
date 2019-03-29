@@ -3,6 +3,7 @@ package com.capgemini.bankapp.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -36,13 +37,20 @@ public class HelloWorldController extends HttpServlet {
 		String password =req.getParameter("password");
 		
 		resp.setContentType("text/html");
-		PrintWriter out = resp.getWriter();
+		RequestDispatcher dispatcher =null;
+		
+		//PrintWriter out = resp.getWriter();
 		
 		if(username.equals("root")&& password.equals("root@123")) {
-			out.println("<h2>Login successful . Welcome " +username + "</h2>");
+			//out.println("<h2>Login successful . Welcome " +username + "</h2>");
+			dispatcher = req.getRequestDispatcher("success.html");
+			
 		}
-		else
-			out.println("Please verify the credentials");
+		else {
+			dispatcher = req.getRequestDispatcher("error.html");
+		}
+		dispatcher.forward(req, resp);
+			//out.println("Please verify the credentials");
 	}
 
 }
